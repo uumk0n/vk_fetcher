@@ -4,14 +4,11 @@ import argparse
 import os
 from dotenv import load_dotenv
 
-# Load environment variables from .env file
 load_dotenv()
 
-# VK API constants
 API_VERSION = '5.131'
 BASE_URL = 'https://api.vk.com/method/'
 
-# Function to make requests to VK API
 def vk_request(method, params):
     url = f'{BASE_URL}{method}'
     response = requests.get(url, params=params)
@@ -21,7 +18,6 @@ def vk_request(method, params):
         raise Exception(f"Error {data['error']['error_code']}: {data['error']['error_msg']}")
     return data['response']
 
-# Fetching VK user info, followers, subscriptions, and groups
 def fetch_vk_data(user_id, access_token):
     params = {
         'user_ids': user_id,
@@ -60,12 +56,10 @@ def fetch_vk_data(user_id, access_token):
         'groups': groups
     }
 
-# Save data to a JSON file with readable formatting
 def save_to_json(data, file_path):
     with open(file_path, 'w', encoding='utf-8') as file:
         json.dump(data, file, ensure_ascii=False, indent=4)
 
-# Main function to handle arguments and call necessary functions
 def main():
     parser = argparse.ArgumentParser(description='Fetch VK user data.')
     parser.add_argument('--user_id', type=str, default=None, help='VK user ID (optional).')
